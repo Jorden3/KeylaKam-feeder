@@ -1,15 +1,15 @@
 var io = require('socket.io-client');
-//var ss = require('socket.io-stream');
+var ss = require('socket.io-stream');
 var fs = require('fs');
 
 
 var spawn = require('child_process').spawn;
  
 var socket = io.connect('http://192.168.1.7:8080', {reconnect: true});
-//var stream = ss.createStream();
+var stream = ss.createStream();
 //var filename = 'profile.jpg';
 
-socket.emit('feeder');
+ss(socket).emit('feeder');
 startStreaming();
 
 function stopStreaming() {
@@ -26,21 +26,24 @@ function startStreaming() {
    
     console.log('Watching for changes...');
    
-    fs.watchFile('/home/pi/Desktop/image_stream.jpg', function(current, previous) {
-      fs.readFile('/home/pi/Desktop/image_stream.jpg', function(err, buff){
-        if(count === 1000){
-          console.log(count + '\n');
-        }
+    ss(socket).emit('liveStream', stream)
+    fs.createReadStream('/home/pi/Desktop/image_stream.jpg').pipe(stream);
+    // fs.watchFile('/home/pi/Desktop/image_stream.jpg', function(current, previous) {
+    //   fs.readFile('/home/pi/Desktop/image_stream.jpg', function(err, buff){
+    //     count++;
+    //     if(count === 1000){
+    //       console.log(count + '\n');
+    //     }
 
-        if(!err){
-          socket.emit('liveStream', buff);
-        }
-        else{
-          console.err('Error in stream getting changes to photo\n', err);
-        }
-      });
+    //     if(!err){
+    //       socket.emit('liveStream', buff);
+    //     }
+    //     else{
+    //       console.err('Error in stream getting changes to photo\n', err);
+    //     }
+    //   });
       
-    })
+    // })
    
   }
 
