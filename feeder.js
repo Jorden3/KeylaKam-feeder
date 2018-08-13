@@ -21,29 +21,29 @@ function stopStreaming() {
 
 function startStreaming() {
     var count =0;
-    var args = ["-w", "640", "-h", "480", "-o", "/home/pi/Desktop/image_stream.jpg","-n","-t", "999999999", "-tl", "100"];
+    var args = ["-w", "640", "-h", "480", "-o", "/home/pi/Desktop/image_stream.jpg","-n","-t", "999999999", "-tl", "50"];
     proc = spawn('raspistill', args);
    
     console.log('Watching for changes...');
    
-    ss(socket).emit('liveStream', stream)
-    fs.createReadStream('/home/pi/Desktop/image_stream.jpg').pipe(stream);
-    // fs.watchFile('/home/pi/Desktop/image_stream.jpg', function(current, previous) {
-    //   fs.readFile('/home/pi/Desktop/image_stream.jpg', function(err, buff){
-    //     count++;
-    //     if(count === 1000){
-    //       console.log(count + '\n');
-    //     }
+    // ss(socket).emit('liveStream', stream)
+    // fs.createReadStream('/home/pi/Desktop/image_stream.jpg').pipe(stream);
+    fs.watchFile('/home/pi/Desktop/image_stream.jpg', function(current, previous) {
+      fs.readFile('/home/pi/Desktop/image_stream.jpg', function(err, buff){
+        count++;
+        if(count === 100){
+          console.log(count + '\n');
+        }
 
-    //     if(!err){
-    //       socket.emit('liveStream', buff);
-    //     }
-    //     else{
-    //       console.err('Error in stream getting changes to photo\n', err);
-    //     }
-    //   });
+        if(!err){
+          socket.emit('liveStream', buff);
+        }
+        else{
+          console.err('Error in stream getting changes to photo\n', err);
+        }
+      });
       
-    // })
+    })
    
   }
 
