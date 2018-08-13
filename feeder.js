@@ -20,7 +20,7 @@ function stopStreaming() {
   }
 
 function startStreaming() {
-   
+    var count =0;
     var args = ["-w", "640", "-h", "480", "-o", "/home/pi/Desktop/image_stream.jpg","-n","-t", "999999999", "-tl", "100"];
     proc = spawn('raspistill', args);
    
@@ -28,7 +28,16 @@ function startStreaming() {
    
     fs.watchFile('/home/pi/Desktop/image_stream.jpg', function(current, previous) {
       fs.readFile('/home/pi/Desktop/image_stream.jpg', function(err, buff){
-        socket.emit('liveStream', buff);
+        if(count === 1000){
+          console.log(count + '\n');
+        }
+
+        if(!err){
+          socket.emit('liveStream', buff);
+        }
+        else{
+          console.err('Error in stream getting changes to photo\n', err);
+        }
       });
       
     })
