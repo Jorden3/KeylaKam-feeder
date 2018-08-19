@@ -7,7 +7,7 @@
     <title>Document</title>
     <script src="./p5.js"></script>
     <script src="./addons/p5.dom.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js"></script>
+    <script src="http://35.190.181.111/socket.io/socket.io.js"></script>
 
     
 </head>
@@ -15,8 +15,8 @@
     <script>
         var can;
         var video;
-        var socket = io.connect('http://104.196.183.23');
-
+        var socket = io.connect('http://35.190.181.111', {trasports:'websocket'});
+        socket.emit('feeder');
         function setup(){
             can = createCanvas(320, 240);
             video = createCapture(VIDEO);
