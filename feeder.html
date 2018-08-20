@@ -5,32 +5,45 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
-    <script src="./p5.js"></script>
-    <script src="./addons/p5.dom.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.1/p5.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.1/addons/p5.dom.min.js"></script>
     <script src="http://35.190.181.111/socket.io/socket.io.js"></script>
-
+    <script>
+    var socket = io.connect('http://35.190.181.111', {trasports:'websocket'});
+    socket.emit('feeder');
+  
+	
+		socket.on('feed', function(){
+		console.log('feed');
+		jQuery.ajax({
+			'type': 'GET',
+			'url':'http://localhost:5000/',
+			'dataType':'text'
+		}); 
+	});
+            
+       
+    </script>
     
 </head>
 <body>
     <script>
         var can;
         var video;
-        var socket = io.connect('http://35.190.181.111', {trasports:'websocket'});
-        socket.emit('feeder');
-        function setup(){
-            can = createCanvas(320, 240);
-            video = createCapture(VIDEO);
-            video.size(1280,720);
-            video.hide();
-        }
+		function setup(){
+				can = createCanvas(480, 320);
+				video = createCapture(VIDEO);
+				video.size(1280,720);
+				video.hide();
+		}
 
         function draw(){
-            image(video, 0, 0, 320, 240);
-
-           
+            image(video, 0, 0, 480, 320);
             socket.emit('liveStream', can.canvas.toDataURL());
-            
-        }
+		}
+        
+ 
     </script>
 </body>
 </html>
