@@ -11,9 +11,8 @@
     <script src="http://35.190.181.111/socket.io/socket.io.js"></script>
     <script>
     var socket = io.connect('http://35.190.181.111', {trasports:'websocket'});
-    socket.emit('feeder');
-  
-	
+    socket.emit('feeder'); 
+        //helped by Simon Nikuals
 		socket.on('feed', function(){
 		console.log('feed');
 		jQuery.ajax({
@@ -21,14 +20,15 @@
 			'url':'http://localhost:5000/',
 			'dataType':'text'
 		}); 
-	});
-            
-       
+	});   
     </script>
     
 </head>
 <body>
     <script>
+
+        // this was taken from github user: Hcastilla
+        // at location :https://github.com/Hcastilla/Live-Streaming/blob/master/index.html
         var can;
         var video;
 		function setup(){
