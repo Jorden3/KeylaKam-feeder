@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Feeder</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.1/p5.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.1/addons/p5.dom.min.js"></script>
@@ -26,7 +26,6 @@
 </head>
 <body>
     <script>
-
         // this was taken from github user: Hcastilla
         // at location :https://github.com/Hcastilla/Live-Streaming/blob/master/index.html
         var can;
@@ -42,11 +41,6 @@
             image(video, 0, 0, 480, 320);
             socket.emit('liveStream', can.canvas.toDataURL());
 		}
-        
- 
     </script>
 </body>
 </html>
-
-
-
